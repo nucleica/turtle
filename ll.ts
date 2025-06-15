@@ -3,15 +3,16 @@ export function lls(command: string[]) {
   let stderr = "";
 
   const promise = new Promise((res, rej) => {
-    ll(command, (data, err) => {
+    ll(command, (data) => {
       stdout += data;
-      stderr += err;
     }, (err) => {
       if (err) {
         return rej(err);
       }
 
       res({ stdout, stderr });
+    }, (err) => {
+      stderr += err;
     });
   });
 
