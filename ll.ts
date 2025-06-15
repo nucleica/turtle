@@ -81,6 +81,6 @@ export function ll(
       }),
     );
   } catch (err) {
-    console.log(err);
+    finished && finished(err as Error);
   }
 }
