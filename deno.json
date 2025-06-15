@@ -1,0 +1,11 @@
+{
+  "name": "@nucleic/tutrle",
+  "version": "0.1.0",
+  "exports": "./index.ts",
+  "tasks": {
+    "ll": "deno run --allow-run main.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1"
+  }
+}
