@@ -1,18 +1,37 @@
-export function lls(command: string[]) {
+export interface LlOptionsSync {
+  args?: string[];
+  cwd?: string;
+}
+
+export interface LlOptions extends LlOptionsSync {
+  stderr?: (error: string) => void;
+  finished?: (err?: Error) => void;
+  change?: (data: string) => void;
+}
+
+export function lls(command: string, options?: LlOptionsSync) {
   let stdout = "";
   let stderr = "";
 
   const promise = new Promise((res, rej) => {
-    ll(command, (data) => {
-      stdout += data;
-    }, (err) => {
-      if (err) {
-        return rej(err);
-      }
+    ll(command, {
+      change: (data) => {
+        stdout += data;
+      },
 
-      res({ stdout, stderr });
-    }, (err) => {
-      stderr += err;
+      finished: (err) => {
+        if (err) {
+          return rej(err);
+        }
+
+        res({ stdout, stderr });
+      },
+
+      stderr: (err) => {
+        stderr += err;
+      },
+
+      ...options,
     });
   });
 
@@ -20,15 +39,14 @@ export function lls(command: string[]) {
 }
 
 export function ll(
-  command: string[],
-  change?: (data: string) => void,
-  finished?: (err?: Error) => void,
-  stderr?: (error: string) => void,
+  command: string,
+  { change, finished, stderr, cwd, args }: LlOptions,
 ) {
-  const cmd = new Deno.Command(command[0], {
-    args: command.slice(1),
+  const cmd = new Deno.Command(command, {
     stdout: "piped",
     stderr: "piped",
+    args,
+    cwd,
   });
 
   try {
