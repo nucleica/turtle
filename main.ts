@@ -1,10 +1,14 @@
-import { ll } from "./ll.ts";
+import { ll } from "./src/ll.ts";
 
 // Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
 if (import.meta.main) {
-  ll("ls", (data) => {
-    console.log(data);
-  }, (err) => {
-    console.error(err);
+  ll("ls", {
+    change: (data) => {
+      console.log(data);
+    },
+
+    finished: (err) => {
+      console.error(err);
+    },
   });
 }

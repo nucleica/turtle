@@ -40,7 +40,7 @@ export function lls(command: string, options?: LlOptionsSync) {
 
 export function ll(
   command: string,
-  { change, finished, stderr, cwd, args }: LlOptions,
+  { change, finished, stderr, cwd, args }: LlOptions = {},
 ) {
   const cmd = new Deno.Command(command, {
     stdout: "piped",
