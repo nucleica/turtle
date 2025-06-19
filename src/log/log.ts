@@ -4,6 +4,8 @@ export function t(...ars: unknown[]) {
   o({ time: true }, ...ars);
 }
 
+let _lastTimeValue: string;
+
 export function o(...ars: unknown[]) {
   const input: unknown[] = [];
 
@@ -17,11 +19,15 @@ export function o(...ars: unknown[]) {
     }
 
     if ("time" in ars[0]) {
+      const time = new Date().toLocaleTimeString();
+
       input.push(
-        `${ansi("\[34m")}${new Date().toLocaleTimeString()}${
+        `${ansi(`\[${time === _lastTimeValue ? 4 : 3}4m`)}${time}${
           ansi(General.reset)
         }`,
       );
+
+      _lastTimeValue = time;
     }
   }
 
