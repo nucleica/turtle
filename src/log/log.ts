@@ -1,6 +1,10 @@
 import { ansi, General } from "./ansi.ts";
 
-export function log(...ars: unknown[]) {
+export function t(...ars: unknown[]) {
+  o({ time: true }, ...ars);
+}
+
+export function o(...ars: unknown[]) {
   const input: unknown[] = [];
 
   if (
@@ -14,7 +18,7 @@ export function log(...ars: unknown[]) {
 
     if ("time" in ars[0]) {
       input.push(
-        `${ansi("\[30m")}[${new Date().toLocaleTimeString()}]${
+        `${ansi("\[34m")}${new Date().toLocaleTimeString()}${
           ansi(General.reset)
         }`,
       );

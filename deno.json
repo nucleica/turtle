@@ -1,6 +1,6 @@
 {
   "name": "@nucleic/turtle",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "exports": "./index.ts",
   "tasks": {
     "ll": "deno run --allow-run main.ts"
